@@ -1,0 +1,23 @@
+{
+  "name": "electricitybillmanagementsystem",
+  "version": "1.0.0",
+  "description": "A beginner-friendly MCA final semester Django project for managing consumers, generating electricity bills, downloading PDF bills, and viewing dashboard analytics.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build:css": "tailwind -i ./static/src/input.css -o ./static/css/output.css --minify",
+    "watch:css": "tailwind -i ./static/src/input.css -o ./static/css/output.css --watch",
+    "test": "echo \"No tests configured\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.13"
+  }
+}

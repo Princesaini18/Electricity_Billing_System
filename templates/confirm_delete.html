@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block page_title %}Confirm Delete{% endblock %}
+{% block content %}
+<section class="mx-auto max-w-xl">
+    <div class="app-card">
+        <div class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 text-rose-600 dark:bg-rose-500/15 dark:text-rose-300">
+            <i data-lucide="trash-2" class="h-5 w-5"></i>
+        </div>
+        <h2 class="text-xl font-extrabold tracking-tight">Delete Record</h2>
+        <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+            You are deleting <span class="font-semibold">{{ object }}</span>. This action cannot be undone.
+        </p>
+
+        <form method="post" class="mt-6 flex flex-wrap gap-3">
+            {% csrf_token %}
+            <button class="btn-danger" type="submit">
+                <i data-lucide="trash-2" class="h-4 w-4"></i>
+                Yes, Delete
+            </button>
+            <a class="btn-secondary" href="{{ cancel_url }}">
+                <i data-lucide="arrow-left" class="h-4 w-4"></i>
+                Cancel
+            </a>
+        </form>
+    </div>
+</section>
+{% endblock %}

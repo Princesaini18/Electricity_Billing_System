@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load form_tags %}
+{% block title %}Login | Smart Electricity Billing System{% endblock %}
+{% block auth_content %}
+<section class="grid min-h-screen lg:grid-cols-2">
+    <div class="relative flex items-center justify-center bg-white px-6 py-12 dark:bg-slate-950">
+        <div class="w-full max-w-md">
+            <div class="mb-8 flex items-center gap-3">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-600 text-white">
+                    <i data-lucide="zap" class="h-5 w-5"></i>
+                </span>
+                <div>
+                    <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Admin Login</p>
+                    <h1 class="text-lg font-extrabold tracking-tight">Smart Electricity Billing System</h1>
+                </div>
+            </div>
+
+            <div class="app-panel p-6">
+                <h2 class="text-2xl font-extrabold tracking-tight">Login to your account</h2>
+                <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Use your staff credentials to access the billing dashboard.</p>
+
+                {% if form.errors %}
+                    <div class="mt-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-300">
+                        Invalid username/email or password.
+                    </div>
+                {% endif %}
+
+                <form method="post" class="mt-6 space-y-4" novalidate>
+                    {% csrf_token %}
+                    <div>
+                        <label class="mb-2 block text-sm font-semibold" for="{{ form.username.id_for_label }}">Email or Username</label>
+                        {{ form.username|add_class:"app-input" }}
+                    </div>
+                    <div>
+                        <div class="mb-2 flex items-center justify-between">
+                            <label class="text-sm font-semibold" for="{{ form.password.id_for_label }}">Password</label>
+                            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Forgot password?</span>
+                        </div>
+                        {{ form.password|add_class:"app-input" }}
+                    </div>
+                    <label class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300">
+                        <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-300 dark:border-slate-700 dark:bg-slate-900">
+                        Remember me
+                    </label>
+                    <button class="btn-primary w-full" type="submit">
+                        <i data-lucide="log-in" class="h-4 w-4"></i>
+                        Login
+                    </button>
+                </form>
+                <div class="mt-5 border-t border-slate-200 pt-5 text-center dark:border-slate-800">
+                    <a href="{% url 'consumer_login' %}" class="text-sm font-semibold text-brand-600 hover:text-brand-500 dark:text-brand-300">
+                        Consumer Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden bg-slate-100 p-10 dark:bg-slate-900 lg:block">
+        <div class="flex h-full flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-soft dark:border-slate-800 dark:bg-slate-950">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Electricity Analytics</p>
+            <h3 class="mt-3 text-3xl font-extrabold tracking-tight">Powering Smarter Billing Operations</h3>
+            <p class="mt-3 max-w-md text-sm text-slate-600 dark:text-slate-300">
+                Generate bills, monitor payments, and review monthly performance in one modern control panel built for MCA project demos and portfolio showcases.
+            </p>
+
+            <div class="mt-10 grid gap-4 sm:grid-cols-2">
+                <div class="app-card">
+                    <p class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Fast Workflow</p>
+                    <p class="mt-2 text-xl font-bold">Consumer to bill in under 2 minutes</p>
+                </div>
+                <div class="app-card">
+                    <p class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Billing Accuracy</p>
+                    <p class="mt-2 text-xl font-bold">Slab tariff + tax automation</p>
+                </div>
+            </div>
+            <div class="mt-auto app-card">
+                <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">Made for MCA Final Semester</p>
+                <p class="mt-2 text-lg font-bold">Clean architecture, clear dashboard, and viva-ready demo flow.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

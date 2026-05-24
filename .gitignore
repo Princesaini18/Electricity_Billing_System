@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# Django runtime files
+db.sqlite3
+staticfiles/
+
+# Editor/OS
+.DS_Store
+.vscode/
+
+# Node modules (can be reinstalled)
+node_modules/

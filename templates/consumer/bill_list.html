@@ -1,0 +1,91 @@
+{% extends "consumer/base.html" %}
+{% block page_title %}My Bills{% endblock %}
+{% block content %}
+<section class="space-y-6">
+    <div class="app-panel p-5">
+        <div class="inline-flex flex-wrap rounded-lg border border-slate-200 bg-slate-50 p-1 dark:border-slate-700 dark:bg-slate-800">
+            <a href="{% url 'consumer_bill_list' %}" class="rounded-md px-3 py-1.5 text-sm font-semibold transition {% if not status %}bg-white text-slate-900 shadow-soft dark:bg-slate-900 dark:text-slate-100{% else %}text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200{% endif %}">
+                All
+            </a>
+            <a href="?status=Paid" class="rounded-md px-3 py-1.5 text-sm font-semibold transition {% if status == 'Paid' %}bg-white text-slate-900 shadow-soft dark:bg-slate-900 dark:text-slate-100{% else %}text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200{% endif %}">
+                Paid
+            </a>
+            <a href="?status=Pending" class="rounded-md px-3 py-1.5 text-sm font-semibold transition {% if status == 'Pending' %}bg-white text-slate-900 shadow-soft dark:bg-slate-900 dark:text-slate-100{% else %}text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200{% endif %}">
+                Pending
+            </a>
+        </div>
+    </div>
+
+    <div class="app-panel overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-800">
+                <thead class="bg-slate-50 text-slate-600 dark:bg-slate-800/60 dark:text-slate-300">
+                    <tr>
+                        <th class="px-5 py-3 text-left font-semibold">Bill ID</th>
+                        <th class="px-5 py-3 text-left font-semibold">Bill Date</th>
+                        <th class="px-5 py-3 text-left font-semibold">Due Date</th>
+                        <th class="px-5 py-3 text-left font-semibold">Units</th>
+                        <th class="px-5 py-3 text-left font-semibold">Amount</th>
+                        <th class="px-5 py-3 text-left font-semibold">Status</th>
+                        <th class="px-5 py-3 text-right font-semibold">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 bg-white dark:divide-slate-800 dark:bg-slate-900">
+                    {% for bill in bills %}
+                        <tr class="transition hover:bg-slate-50 dark:hover:bg-slate-800/60">
+                            <td class="px-5 py-3 font-semibold">#{{ bill.id }}</td>
+                            <td class="px-5 py-3">{{ bill.bill_date }}</td>
+                            <td class="px-5 py-3">{{ bill.due_date }}</td>
+                            <td class="px-5 py-3">{{ bill.units_used }}</td>
+                            <td class="px-5 py-3 font-semibold">Rs. {{ bill.total_amount }}</td>
+                            <td class="px-5 py-3">{% include "components/badge.html" with status=bill.status %}</td>
+                            <td class="px-5 py-3 text-right">
+                                <div class="inline-flex gap-2">
+                                    <a href="{% url 'consumer_bill_detail' bill.pk %}" class="btn-secondary px-3 py-1.5 text-xs">
+                                        <i data-lucide="eye" class="h-3.5 w-3.5"></i>
+                                        View
+                                    </a>
+                                    <a href="{% url 'consumer_bill_pdf' bill.pk %}" class="btn-secondary px-3 py-1.5 text-xs">
+                                        <i data-lucide="download" class="h-3.5 w-3.5"></i>
+                                        PDF
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="7" class="px-5 py-10 text-center text-sm font-medium text-slate-500 dark:text-slate-400">
+                                No bills found.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if page_obj.paginator.num_pages > 1 %}
+        <div class="app-panel p-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <p class="text-sm text-slate-500 dark:text-slate-400">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </p>
+                <div class="inline-flex items-center gap-2">
+                    {% if page_obj.has_previous %}
+                        <a href="?{% if status %}status={{ status }}&{% endif %}page={{ page_obj.previous_page_number }}" class="btn-secondary px-3 py-1.5 text-xs">
+                            <i data-lucide="chevron-left" class="h-3.5 w-3.5"></i>
+                            Previous
+                        </a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?{% if status %}status={{ status }}&{% endif %}page={{ page_obj.next_page_number }}" class="btn-secondary px-3 py-1.5 text-xs">
+                            Next
+                            <i data-lucide="chevron-right" class="h-3.5 w-3.5"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block page_title %}Bill Detail{% endblock %}
+{% block content %}
+<section class="space-y-6">
+    <div class="app-panel p-6">
+        <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 pb-5 dark:border-slate-800">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Electricity Invoice</p>
+                <h2 class="mt-2 text-2xl font-extrabold tracking-tight">Bill #{{ bill.id }}</h2>
+                <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Generated on {{ bill.bill_date }} | Due on {{ bill.due_date }}</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                {% include "components/badge.html" with status=bill.status %}
+                <button class="btn-secondary" type="button" onclick="window.print()">
+                    <i data-lucide="printer" class="h-4 w-4"></i>
+                    Print
+                </button>
+                <a class="btn-primary" href="{% url 'bill_pdf' bill.pk %}">
+                    <i data-lucide="download" class="h-4 w-4"></i>
+                    Download PDF
+                </a>
+                {% if bill.status == "Pending" %}
+                    <a class="btn-secondary" href="{% url 'mark_bill_paid' bill.pk %}">
+                        <i data-lucide="check-circle-2" class="h-4 w-4"></i>
+                        Mark Paid
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mt-6 grid gap-6 md:grid-cols-2">
+            <div class="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+                <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Consumer Information</h3>
+                <dl class="mt-4 space-y-2 text-sm">
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Name</dt><dd class="font-semibold">{{ bill.consumer.name }}</dd></div>
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Consumer Number</dt><dd class="font-semibold">{{ bill.consumer.consumer_number }}</dd></div>
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Meter Number</dt><dd class="font-semibold">{{ bill.consumer.meter_number }}</dd></div>
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Connection Type</dt><dd class="font-semibold">{{ bill.consumer.connection_type }}</dd></div>
+                    <div><dt class="text-slate-500 dark:text-slate-400">Address</dt><dd class="mt-1 font-medium">{{ bill.consumer.address }}</dd></div>
+                </dl>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-4 dark:border-slate-800">
+                <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Reading Summary</h3>
+                <dl class="mt-4 space-y-2 text-sm">
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Previous Reading</dt><dd class="font-semibold">{{ bill.previous_reading }}</dd></div>
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Current Reading</dt><dd class="font-semibold">{{ bill.current_reading }}</dd></div>
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Units Used</dt><dd class="font-semibold">{{ bill.units_used }}</dd></div>
+                    <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Due Date</dt><dd class="font-semibold">{{ bill.due_date }}</dd></div>
+                </dl>
+            </div>
+        </div>
+
+        <div class="mt-6 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div class="border-b border-slate-200 px-4 py-3 dark:border-slate-800">
+                <h3 class="text-sm font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Amount Breakdown</h3>
+            </div>
+            <div class="space-y-2 p-4 text-sm">
+                <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-800">
+                    <span>Energy Charge</span>
+                    <strong>Rs. {{ bill.energy_charge }}</strong>
+                </div>
+                <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-800">
+                    <span>Fixed Charge</span>
+                    <strong>Rs. {{ bill.fixed_charge }}</strong>
+                </div>
+                <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-800">
+                    <span>Tax (5%)</span>
+                    <strong>Rs. {{ bill.tax_amount }}</strong>
+                </div>
+                <div class="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-3 text-base dark:border-slate-700 dark:bg-slate-900">
+                    <span class="font-semibold">Total Amount</span>
+                    <strong class="text-xl font-extrabold">Rs. {{ bill.total_amount }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
