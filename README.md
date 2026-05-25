@@ -17,6 +17,27 @@ A professional MCA final semester Django project for electricity consumer manage
 
 ### 1. Backend setup
 
+Recommended Python version: **3.12**
+
+On Windows PowerShell:
+
+```powershell
+py -3.12 -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py createsuperuser
+```
+
+If you already created a `venv` using Python 3.15, delete it and recreate it with Python 3.12:
+
+```powershell
+Remove-Item -Recurse -Force .\venv
+py -3.12 -m venv venv
+```
+
+On macOS/Linux:
+
 ```bash
 python3 -m venv venv
 source venv/bin/activate
