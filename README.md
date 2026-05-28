@@ -1,6 +1,6 @@
 # Smart Electricity Billing System
 
-A professional MCA final semester Django project for electricity consumer management, bill generation, analytics dashboards, and PDF bill downloads.
+A professional BCA final semester Django project for electricity consumer management, bill generation, analytics dashboards, and PDF bill downloads.
 
 ## Tech Stack
 

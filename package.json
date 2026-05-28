@@ -1,7 +1,7 @@
 {
   "name": "electricitybillmanagementsystem",
   "version": "1.0.0",
-  "description": "A beginner-friendly MCA final semester Django project for managing consumers, generating electricity bills, downloading PDF bills, and viewing dashboard analytics.",
+  "description": "A beginner-friendly BCA final semester Django project for managing consumers, generating electricity bills, downloading PDF bills, and viewing dashboard analytics.",
   "main": "index.js",
   "directories": {
     "doc": "docs"
